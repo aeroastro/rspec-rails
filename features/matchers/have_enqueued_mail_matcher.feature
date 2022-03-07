@@ -90,7 +90,7 @@ Feature: have_enqueued_mail matcher
           # Works with named parameters
           expect {
             MyMailer.with(foo: 'bar').signup.deliver_later
-          }.to have_enqueued_mail(MyMailer, :signup).with(foo: 'bar')
+          }.to have_enqueued_mail(MyMailer, :signup).with(a_hash_including(params: {foo: 'bar'}))
         end
       end
       """
@@ -120,7 +120,7 @@ Feature: have_enqueued_mail matcher
           # Works also with both, named parameters match first argument
           expect {
             MyMailer.with(foo: 'bar').signup('user').deliver_later
-          }.to have_enqueued_mail(MyMailer, :signup).with({foo: 'bar'}, 'user')
+          }.to have_enqueued_mail(MyMailer, :signup).with(params: {foo: 'bar'}, args: ['user'])
         end
       end
       """
